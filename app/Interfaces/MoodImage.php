@@ -9,10 +9,16 @@ class MoodImage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'post_id'];
+    protected $fillable = [
+        'image',
+        'sort_order'
+    ];
 
     public function post()
     {
-        return $this->belongsTo(MoodPost::class, 'post_id');
+        return $this->belongsTo(MoodPost::class);
     }
+
+
 }
+

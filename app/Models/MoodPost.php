@@ -18,7 +18,7 @@ class MoodPost extends Model
 
     public function images()
     {
-        return $this->hasMany(MoodImage::class);
+        return $this->hasMany(MoodImage::class, 'post_id');
     }
 
     public function user()

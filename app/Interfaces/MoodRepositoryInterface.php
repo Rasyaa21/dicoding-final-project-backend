@@ -7,4 +7,3 @@ interface MoodRepositoryInterface{
     public function getMoodById(int $id);
     public function getMoodByName(string $name);
 }
-
