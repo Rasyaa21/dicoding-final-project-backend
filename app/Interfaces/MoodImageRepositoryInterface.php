@@ -6,4 +6,3 @@ interface MoodImageRepositoryInterface{
     public function getAllMoodImage();
     public function getImageByPostId(int $postId);
 }
-
