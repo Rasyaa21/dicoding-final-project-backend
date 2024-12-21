@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Repositories;
+
+
 use App\Interfaces\MoodImageRepositoryInterface;
 use App\Models\MoodImage;
 
