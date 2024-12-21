@@ -9,4 +9,5 @@ interface MoodPostRepositoryInterface{
     public function editMoodPost(int $id, array $data);
     public function deleteMoodPost(int $id);
     public function getAllMoodPostByUserId(int $id);
+    public function getMoodPostByUserId(int $moodId, int $userId);
 }
