@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Responses\ApiResponse;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 use Exception;
 use UserRepository;
 
@@ -29,14 +32,9 @@ class UserController extends Controller
             $data = $req->validated();
             $user = $this->userRepository->register($data);
             $token = $user->createToken('token')->plainTextToken;
-            return response()->json([
-                'token' => $token,
-                'data' => $data
-            ]);
+            return new ApiResponse(201, [new UserResource($user), 'token' => $token]);
         } catch (Exception $e){
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 500);
+            return new ApiResponse(500, [], 'server error', $e->getMessage());
         }
     }
 

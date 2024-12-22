@@ -3,10 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Responses\ApiResponse;
 
 class CreateUserRequest extends FormRequest
 {
-
     public function rules(): array
     {
         return [
@@ -39,5 +41,15 @@ class CreateUserRequest extends FormRequest
             'password.min' => 'The password must be at least 8 characters.',
             'password.regex' => 'The password must include at least one uppercase letter, one lowercase letter, and one number.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->toArray();
+
+        $ApiResponse = new ApiResponse(422, $errors, 'validation failed');
+        $response = $ApiResponse->toResponse($this->request);
+
+        throw new HttpResponseException($response);
     }
 }
